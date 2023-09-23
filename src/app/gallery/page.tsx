@@ -1,20 +1,21 @@
 import { type } from 'os';
 import UploadButton from './upload-button'
 import cloudinary from 'cloudinary'
-import { CldImage } from 'next-cloudinary';
 import CloudinaryImage from './cloudinary_image';
-type SearchResult = {
-    public_id:string
+export type SearchResult = {
+    public_id:string,
+    tags:string[]
 }
 export default async function GalleryPage(){
 
     const result = await cloudinary.v2.search
     .expression('resource_type:image')
     .sort_by('created_at','desc')
+    .with_field("tags")
     .max_results(30)
     .execute() as {resources: SearchResult[]};
 
-    console.log(result)
+    console.log(result,"results")
     return(
         <section >
             <div className='flex flex-col gap-8'>
@@ -30,7 +31,7 @@ export default async function GalleryPage(){
                 {result.resources.map((result)=>(
                    <CloudinaryImage
                     key={result.public_id}
-                    src={result.public_id}
+                    imageData={result}
                     width="400"
                     height="300"
                     alt="an image of something"
