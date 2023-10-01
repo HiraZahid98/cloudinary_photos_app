@@ -1,8 +1,7 @@
-'use client'
-// import { type } from 'os';
+import { type } from 'os';
 import cloudinary from 'cloudinary'
-// import { CldImage } from 'next-cloudinary';
-// import CloudinaryImage from '../gallery/cloudinary_image';
+import { CldImage } from 'next-cloudinary';
+import CloudinaryImage from '../../components/cloudinary_image';
 import { SearchResult } from '../gallery/page';
 import { ForceRefresh } from '@/components/force-refresh';
 import FavoritesList from './favorites-list';

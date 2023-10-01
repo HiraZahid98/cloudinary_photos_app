@@ -1,18 +1,19 @@
 'use client'
 import React from 'react'
-import { CldImage } from 'next-cloudinary'
+import { CldImage, CldImageProps } from 'next-cloudinary'
 import { Heart } from '@/components/icons/heart'
-import {SetAsFavoriteAction} from './actions'
+import {SetAsFavoriteAction} from '../app/gallery/actions'
 import {useTransition, useState } from 'react'
-import { SearchResult } from './page'
+import { SearchResult } from '../app/gallery/page'
 import { FullHeart } from '@/components/icons/full_heart'
+import { ImageMenu } from './image-menu'
 
-export function CloudinaryImage (
-  props:
-  {
-    imageData: SearchResult; 
-    onUnheart?:(unheartedResource:SearchResult)=>void;
-  } & Omit<CldImageProps, "src">
+export default function CloudinaryImage (
+    props:
+    {
+      imageData: SearchResult; 
+      onUnheart?:(unheartedResource:SearchResult)=>void;
+    } & Omit<CldImageProps,"src">
   ) 
   {
   const [transition, startTransition] = useTransition();
@@ -22,7 +23,7 @@ export function CloudinaryImage (
   return (
   <div className='relative'>
 
-  <CldImage {...props} src={imageData.public_id}/>
+  <CldImage {...props} src={imageData.public_id} alt=''/>
   {isFavorited? (
    <FullHeart 
    onClick={()=>{
@@ -32,7 +33,7 @@ export function CloudinaryImage (
        SetAsFavoriteAction(imageData.public_id,false)
      })
    }}
-   className='absolute top-2 right-2 hover:text-white text-red-600 cursor-pointer'/>
+   className='absolute top-2 left-2 hover:text-white text-red-600 cursor-pointer'/>
   ):(  <Heart 
   onClick={()=>{
     setIsFavorited(true)
@@ -40,10 +41,10 @@ export function CloudinaryImage (
       SetAsFavoriteAction(imageData.public_id, true)
     })
   }}
-  className='absolute top-2 right-2 hover:text-red-700 cursor-pointer'/>
+  className='absolute top-2 left-2 hover:text-red-700 cursor-pointer'/>
 )
 }
- 
+ <ImageMenu/>
   </div>
   )
 }
