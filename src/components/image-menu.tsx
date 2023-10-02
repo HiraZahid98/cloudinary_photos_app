@@ -1,7 +1,8 @@
-import {FolderPlus } from "lucide-react"
+import {FolderPlus, Pencil } from "lucide-react"
 import { Menu } from "./icons/menu"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import Link from "next/link"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,6 +24,10 @@ import { SearchResult } from "@/app/gallery/page"
         <DropdownMenuContent className="w-32">
             <DropdownMenuItem asChild>
                 <AddToAlbumDialog image={image} onClose={()=> setOpen(false)}/>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+                <Link href={`/edit?publicId=${encodeURIComponent(image.public_id)}`}>Edit</Link>
+              <Pencil className="mr-2 w-4 h-4"/>
             </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
